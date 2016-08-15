@@ -1,15 +1,18 @@
 {
-    "name": "davegardnerisme/nsqphp",
-    "description": "PHP client for NSQ",
+    "name": "king/nsqphp",
+    "description": "forked from davegardnerisme/nsqphp",
     "type": "library",
-    "keywords": [
-        "nsq"
-    ],
-    "homepage": "https://github.com/davegardnerisme/nsqphp",
     "require": {
         "php": ">=5.3.0",
         "react/react": ">=0.2.1"
     },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "king.wang",
+            "email": "king.wang@toursforfun.cn"
+        }
+    ],
     "autoload": {
         "psr-0": {
             "nsqphp": "src/"
