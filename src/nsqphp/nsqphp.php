@@ -457,10 +457,6 @@ class nsqphp
                     if ($this->dedupe !== NULL) {
                         $this->dedupe->erase($topic, $channel, $msg);
                     }
-
-                    if ($this->logger) {
-                        $this->logger->error("Nsq Callback Exception: " . $e->getMessage());
-                    }
                     
                     if ($this->logger) {
                         $this->logger->warn(sprintf('Error processing [%s] "%s": %s', (string)$connection, $msg->getId(), $e->getMessage()));
