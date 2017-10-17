@@ -67,6 +67,27 @@ class Writer
     {
         return $this->command('RDY', $count);
     }
+
+    /**
+     * Identify [IDENTIFY]
+     *
+     * just allow heartbeat_interval default -1
+     *
+     * @param array $params
+     *
+     * @return string
+     */
+    public function identify($params)
+    {
+        $heartbeatInterval = isset($params['heartbeat_interval']) ? $params['heartbeat_interval'] : -1;
+
+        $data = json_encode([
+            'heartbeat_interval' => $heartbeatInterval
+        ]);
+        $size = pack('N', strlen($data));
+
+        return "IDENTIFY\n" . $size . $data;
+    }
     
     /**
      * Finish [FIN]

@@ -127,6 +127,15 @@ class nsqphp
      * @var string
      */
     private $shortId;
+
+
+    /**
+     * Heartbeat interval (milliseconds)
+     *
+     * @var integer
+     */
+    private $heartbeatInterval;
+
     
     /**
      * Constructor
@@ -146,7 +155,8 @@ class nsqphp
             LoggerInterface $logger = NULL,
             $connectionTimeout = 3,
             $readWriteTimeout = 3,
-            $readWaitTimeout = 15
+            $readWaitTimeout = 15,
+            $heartbeatInterval = 30000
             )
     {
         $this->nsLookup = $nsLookup;
@@ -158,6 +168,7 @@ class nsqphp
         $this->readWriteTimeout = $readWriteTimeout;
         $this->readWaitTimeout = $readWaitTimeout;
         $this->pubSuccessCount = 1;
+        $this->heartbeatInterval = $heartbeatInterval;
         
         $this->subConnectionPool = new Connection\ConnectionPool;
         
@@ -380,6 +391,8 @@ class nsqphp
                 $this->logger->info("Connecting to {$host} and saying hello");
             }
             $conn->write($this->writer->magic());
+            $conn->write($this->writer->identify(['heartbeat_interval'=> $this->heartbeatInterval]));
+
             $this->subConnectionPool->add($conn);
             $socket = $conn->getSocket();
             $nsq = $this;
